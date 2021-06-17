@@ -1,0 +1,39 @@
+<div class="card-user" data-author= {{author.id}}>
+  <div class="card-user__header">
+    <h2 class="card-user__title">
+      {{ author }}
+    </h2>
+  </div>
+  <div class="card-user__body">
+    <ul class="card-user__items">
+      {% for recipe in author.recipes.all|slice:":3" %}
+      <li class="card-user__item">
+        <div class="recipe">
+          {% load thumbnail %}
+          {% thumbnail recipe.image "72x72" crop="center" upscale=True as im %}
+          <img src={{ im.url }} alt="картинка" class="recipe__image">
+          {% endthumbnail %}
+          <h3 class="recipe__title">
+            <a class="card-user__link link" href={% url 'single_recipe' recipe.id %} target="_blank">
+            {{ recipe.title }} 
+            </a>
+          </h3>
+          <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
+        </div>
+      </li>
+      {% endfor %}
+      {% if author.recipes.count > 3 %}
+      <li class="card-user__item">
+        <a href={% url 'author_recipe' author.username %} class="card-user__link link">
+        Другие рецепты: ещё {{ author.recipes.count | add:'-3' }}
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="card-user__footer">
+    {% if user.is_authenticated %}
+    <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+    {% endif %}
+  </div>
+</div>

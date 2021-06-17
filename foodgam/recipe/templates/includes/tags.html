@@ -1,0 +1,10 @@
+<ul class="tags">
+  {% load tag_filters %}
+  {% for tag in all_tags %}
+  <li class="tags__item">
+    <a id="breakfast" class="tags__checkbox tags__checkbox_style_{{tag.color}} tags__checkbox_active"
+      href="{{ request.path }}?{{ request|set_tag_qs:tag}}"></a>
+    <span class="tags__label"> {{ tag.tag }} </span>
+  </li>
+  {% endfor %}
+</ul>
