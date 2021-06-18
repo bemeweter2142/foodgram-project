@@ -18,3 +18,8 @@ Cайт «Продуктовый помощник»
 * Создайте суперпользователя `python ./foodgram/manage.py createsuperuser`
 * Сделайте сборку статических файлов `python ./foodgram/manage.py collectstatic`
 * Запустите локальный сервер `python ./foodgram/manage.py runserver`
+
+### Для администратора
+* Доступ к панели администратора осуществляется по url `*/admin_panel`
+* Создайте Тэги для рецептов и определите для них цвет `green, purple, orange`. 
+* Добавьте ингредиенты

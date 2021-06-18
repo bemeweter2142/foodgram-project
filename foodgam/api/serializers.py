@@ -34,6 +34,7 @@ class FollowSerializer(CustomModelSerializer):
             raise ValidationError('Подписка на самого себя не допустима!')
         return data
 
+
 class MeasurementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Measurement
