@@ -41,9 +41,9 @@ def create_pdf(request):
         'recipe__ingredient__ingredient',
         'recipe__ingredient__measurement__measurement',
     ).annotate(amount=Sum('recipe__many_recipes__amount'))
-    # lines on page
+    # количество линий на странице
     lines = 0
-    # number of ingredient
+    # порядковый номер ингредиента
     number = 1
     for ingredient in ingredients:
         page.drawString(
@@ -55,7 +55,7 @@ def create_pdf(request):
         number += 1
         lines += 1
 
-        # check page is fulled
+        # проверка на отсутствие места на странице
         if top-lines*step < bottom:
             lines = 0
             page.showPage()

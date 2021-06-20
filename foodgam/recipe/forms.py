@@ -51,8 +51,14 @@ class RecipeForm(forms.ModelForm):
             raise ValidationError('Ингредиенты отсутствуют')
         return ingredients
 
+    def clean_cooking_time(self):
+        cooking_time = int(self.data['cooking_time'])
+        if cooking_time < 1:
+            raise ValidationError(
+                f'Время должно быть больше 1 мин.')
+        return cooking_time
+
     def save(self, author, commit=True):
-        print('save was started')
         recipe = super().save(commit=False)
         recipe.author = author
         recipe.save()
@@ -70,6 +76,5 @@ class RecipeForm(forms.ModelForm):
                 ingredient=ingredient,
                 amount=amount
             )
-            print(f'{ingredient} {recipe} {amount}')
             recipe_ingredient.save()
         return recipe

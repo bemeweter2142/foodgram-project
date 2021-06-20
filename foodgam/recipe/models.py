@@ -1,5 +1,6 @@
 # Встроенная модель для работы с пользователям
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
@@ -14,7 +15,7 @@ def get_user_name(self):
 User = get_user_model()
 
 
-User.add_to_class("__str__", get_user_name)
+User.add_to_class('__str__', get_user_name)
 
 
 # Сначала описываются базовые модели, а затем модели с ForeinKey
@@ -43,7 +44,7 @@ class Ingredient(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Единицы измерений',
         default=None,
-        related_name="measurements",
+        related_name='measurements',
     )
 
     class Meta:
@@ -111,6 +112,7 @@ class Recipe(models.Model):
     )
     cooking_time = models.PositiveIntegerField(
         verbose_name='Время приготовления',
+        validators=[MinValueValidator(1)],
     )
     slug = models.SlugField(
         max_length=200,
@@ -147,6 +149,7 @@ class RecipeIngredient(models.Model):
     amount = models.PositiveIntegerField(
         verbose_name='Количество ингредиента',
         default=10,
+        validators=[MinValueValidator(1)],
     )
 
     class Meta:

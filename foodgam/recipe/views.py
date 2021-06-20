@@ -1,11 +1,11 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .decorators import author_or_admin
 from .forms import RecipeForm
-from .models import (Follow, Recipe, RecipeIngredient,
-                     ShopList, Tag, User)
+from .models import Follow, Recipe, RecipeIngredient, ShopList, Tag, User
 from .services import create_pdf
 
 
@@ -68,7 +68,7 @@ def index(request):
         'author'
     ).distinct()
 
-    paginator = Paginator(recipes, 9)
+    paginator = Paginator(recipes, settings.PAGINATION_PAGE_SIZE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     title = 'Рецепты'
@@ -97,7 +97,7 @@ def favorite(request):
         'author'
     ).distinct()
 
-    paginator = Paginator(recipes, 9)
+    paginator = Paginator(recipes, settings.PAGINATION_PAGE_SIZE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     title = 'Избранное'
@@ -118,9 +118,9 @@ def favorite(request):
 
 def author_recipe(request, username):
     author = get_object_or_404(User, username=username)
-    recipes = Recipe.objects.filter(author__username=username)
+    recipes = author.recipes.all()
     tags = Tag.objects.all()
-    paginator = Paginator(recipes, 6)
+    paginator = Paginator(recipes, settings.PAGINATION_PAGE_SIZE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(

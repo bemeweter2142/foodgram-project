@@ -31,14 +31,14 @@ class FollowSerializer(CustomModelSerializer):
     def validate_author(self, data):
         user = self.context['request'].user
         if user.id == data:
-            raise ValidationError('Подписка на самого себя не допустима!')
+            raise ValidationError('Подписка на самого себя недопустима!')
         return data
 
 
 class MeasurementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Measurement
-        fields = ('measurement',)
+        fields = ('measurement', )
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -47,4 +47,3 @@ class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ('ingredient', 'measurement', )
-

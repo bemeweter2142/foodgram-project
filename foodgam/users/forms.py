@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-
+from django.core.exceptions import ValidationError
 User = get_user_model()
 
 
@@ -9,3 +9,10 @@ class CreationForm(UserCreationForm):
         model = User
         fields = ('first_name', 'last_name', 'username', 'email')
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError(
+                'Введен уже зарегистрированный email'
+            )
+        return email
