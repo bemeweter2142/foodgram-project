@@ -1,0 +1,30 @@
+{% extends "includes/base.html" %}
+{% block title %} Список покупок {% endblock %}
+{% block header %} Список покупок {% endblock %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href={% static "pages/shopList.css"%}>
+{% endblock css %}
+{% block tags %}
+{% include "includes/tags.html" with tags=tags %}
+{% endblock %}
+{% block content %}
+{% csrf_token %}
+<div class="card-list card-list_column">
+<ul class="shopping-list">
+  {% for recipe in recipes.all %}
+  {% include "includes/shopCard.html" with recipe=recipe.recipe %}
+  {% endfor %}
+</ul>
+{% if recipes.count > 0 %}
+<a href="{% url 'shoplist_download' %}"><button class="button button_style_blue">Скачать список</button></a>
+{% endif %}
+{% endblock %}
+{% block script %}
+{% load static %}
+<script src={% static "./js/config/config.js" %}></script>
+<script src={% static "./js/components/Header.js" %}></script>
+<script src={% static "./js/components/ShopList.js" %}></script>
+<script src={% static "./js/api/Api.js" %}></script>
+<script src={% static "shopList.js" %}></script>
+{% endblock %}

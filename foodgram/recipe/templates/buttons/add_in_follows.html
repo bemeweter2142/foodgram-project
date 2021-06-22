@@ -1,0 +1,20 @@
+{% load recipe_filters %}
+{% with request.resolver_match.url_name as url_name %}
+{% if user|is_following:author %}
+<div class="author-subscribe" data-author="{{ author.id }}">
+  {% if 'profile_view' in url_name %}
+  <button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button>
+  {% else %}
+  <button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button>
+  {% endif %}
+</div>
+{% else %}
+<div class="author-subscribe" data-author="{{ author.id }}">
+  {% if 'profile_view' in url_name %}
+  <button class="button  button_size_subscribe button_style_blue" name="subscribe" data-out>Подписаться на автора</button>
+  {% else %}
+  <button class="button button_size_subscribe button_style_blue" name="subscribe" data-out>Подписаться на автора</button>
+  {% endif %}
+</div>
+{% endif %}
+{% endwith %}

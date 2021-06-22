@@ -1,0 +1,28 @@
+<div class="card block" data-id={{ recipe.id }}>
+  {% load thumbnail %}
+  {% thumbnail recipe.image "364x240" crop="center" upscale=True as im %}
+  <a href={% url 'single_recipe' recipe.id %} class="link" target="_blank"><img src={{ im.url }} alt="Картинка блюда" class="card__image"></a>
+  {% endthumbnail %}
+  <div class="card__body">
+    <a class="card__title link" href={% url 'single_recipe' recipe.id %} target="_blank">
+    <h3 class="recipe__title"> {{ recipe.title }} </h3>
+    </a>
+    <ul class="card__items">
+      {% for tag in recipe.tag.all %}
+      <li class="card__item"><span class="badge badge_style_{{ tag.color }}"> {{ tag.tag }} </span></li>
+      {% endfor %}
+    </ul>
+    <div class="card__items card__items_column">
+      <p class="card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
+      <p class="card__text"><span class="icon-user"></span>
+        <a href={% url 'author_recipe' recipe.author.username %} style="color: black"> {{ recipe.author }} </a>
+      </p>
+    </div>
+  </div>
+  <div class="card__footer">
+    {% if user.is_authenticated %}
+    {% include 'buttons/add_in_purchases.html' with recipe=recipe %}
+    {% include 'buttons/select_favorite.html' with recipe=recipe big=False %}
+    {% endif %}
+  </div>
+</div>
