@@ -15,7 +15,7 @@ from .models import Recipe, RecipeIngredient, ShopList
 def create_page(page):
     pdfmetrics.registerFont(TTFont(
         'FreeSans',
-        str(f' {settings.BASE_DIR} /recipe/fonts/FreeSans.ttf')
+        str(f'{settings.BASE_DIR}/recipe/fonts/FreeSans.ttf')
         )
     )
     page.setFont('FreeSans', 14)
