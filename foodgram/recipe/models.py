@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
 
+# Определение модели пользователя
+User = get_user_model()
 
 # Если есть, выводятся ФИ, иначе логин
 def get_user_name(self):
@@ -11,8 +13,7 @@ def get_user_name(self):
     return self.username
 
 
-# Определение модели пользователя
-User = get_user_model()
+
 
 
 User.add_to_class('__str__', get_user_name)
