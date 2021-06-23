@@ -24,38 +24,33 @@ jobs:
           tags: 25031997254/foodgram_project:latest
   
   deploy:
-    name: Deploy on production server
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     steps:
-    - name: Check out the repo
-      uses: actions/checkout@master
-
-    - name: copy docker-compose.yaml and static to remote
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.PASSPHRASE }}
-        source: "./docker-compose.yaml, ./.env.temp, ./foodgram/static/, ./nginx/"
-        target: "~/foodgram-project/"
-        rm: false
-        overwrite: true
-
-    - name: executing remote ssh commands to deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.PASSPHRASE }}
-        script: |
-          cd ~/foodgram-project/
-          cp -n .env.temp .env
-          sudo docker pull 25031997254/foodgram_project:latest
-          sudo docker-compose up -d --build
+      - name: executing remote ssh commands to deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          stack_file_name: docker-compose.yaml
+          script: |
+            sudo docker pull 25031997254/foodgram_project:latest
+            sudo docker-compose stop
+            sudo docker-compose rm web
+            # Создаст файл для переменных окружения
+            cd foodgram/
+            touch .env 
+            # Наполнит файл переменными окружения из секретов GitHub 
+            echo DB_ENGINE=${{ secrets.DB_ENGINE }} > .env
+            echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+            echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
+            echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+            sudo docker-compose up -d
 
 
   send_message:
