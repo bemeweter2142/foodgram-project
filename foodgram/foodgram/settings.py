@@ -7,10 +7,10 @@ env = environ.Env()
 environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(env('DB_ENGINE'))
+
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -97,7 +97,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
@@ -110,8 +110,11 @@ USE_TZ = True
 PAGINATION_PAGE_SIZE = 9
 
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+_STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+if DEBUG:
+    STATICFILES_DIRS = (_STATIC_ROOT, )
+else:
+    STATIC_ROOT = _STATIC_ROOT
 
 MEDIA_URL = '/media/'
 
