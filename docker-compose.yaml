@@ -15,6 +15,7 @@ services:
     image: 25031997254/foodgram_project:latest
     volumes:
       - ./foodgram/media:/code/foodgram/media
+      - ./foodgram/static:/code/foodgram/static
     depends_on:
       - db
     env_file:
@@ -26,9 +27,8 @@ services:
       - '80:80'
     volumes:
       - ./nginx/:/etc/nginx/conf.d
-      - ./foodgram/static:/code/static
-      - ./foodgram/media:/code/media
+      - ./foodgram/static:/var/html/static
+      - ./foodgram/media:/var/html/media
     depends_on:
       - web
 
-      
