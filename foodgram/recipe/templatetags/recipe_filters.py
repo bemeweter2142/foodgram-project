@@ -7,13 +7,13 @@ register = template.Library()
 User = get_user_model()
 
 
-
 @register.filter
 def is_following(user, author):
     try:
         return Follow.objects.filter(user=user, author=author).exists()
     except AttributeError:
         return False
+
 
 @register.filter
 def is_favorite(recipe, user):

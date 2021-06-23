@@ -39,12 +39,3 @@ class IngredientAdmin(admin.ModelAdmin):
 
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
-
-# Регистрация в Админке всех остальных моделей, пока разработка идет
-models = apps.get_models()
-
-for model in models:
-    try:
-        admin.site.register(model)
-    except AlreadyRegistered:
-        pass
