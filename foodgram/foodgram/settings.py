@@ -1,11 +1,12 @@
 import environ
 import os
+from pathlib import Path
 
 
 env = environ.Env()
 environ.Env.read_env()
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 print(env('DB_ENGINE'))
 SECRET_KEY = env('SECRET_KEY')
 
