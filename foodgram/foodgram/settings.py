@@ -1,9 +1,14 @@
+import environ
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+env = environ.Env()
+environ.Env.read_env()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+print(env('DB_ENGINE'))
+SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
 
@@ -11,9 +16,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.auth',
-    'users',
-    'recipe',
-    'extra_views',
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -21,7 +23,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sorl.thumbnail',
     'rest_framework',
+    'users',
+    'recipe',
+    'extra_views',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,12 +64,12 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DB_ENGINE'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
