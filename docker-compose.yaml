@@ -30,3 +30,5 @@ services:
       - ./foodgram/media:/code/media
     depends_on:
       - web
+
+      
