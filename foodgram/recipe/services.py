@@ -2,14 +2,14 @@
 import io
 
 from django.conf import settings
-from django.db.models import Count, Q, Sum
+from django.db.models import Sum
 from django.http import FileResponse
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
-from .models import Recipe, RecipeIngredient, ShopList
+from .models import ShopList
 
 
 def create_page(page):

@@ -1,8 +1,7 @@
-from django.apps import apps
 from django.contrib import admin
-from django.contrib.admin.sites import AlreadyRegistered
 
-from .models import Favorite, Ingredient, Recipe, RecipeIngredient
+from .models import (Favorite, Ingredient, Measurement, 
+                     Recipe, RecipeIngredient, Tag)
 
 
 # Регистрация в Админке возможности добавления ингредиентов в рецепте
@@ -37,5 +36,17 @@ class IngredientAdmin(admin.ModelAdmin):
     search_fields = ('ingredient',)
 
 
+class MeasurementAdmin(admin.ModelAdmin):
+    list_display = ('measurement',)
+    search_fields = ('measurement',)
+
+
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('tag', 'color',)
+    search_fields = ('tag',)
+
+
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
+admin.site.register(Measurement, MeasurementAdmin)
+admin.site.register(Tag, TagAdmin)
