@@ -1,12 +1,11 @@
 import environ
 import os
-from pathlib import Path
 
 
 env = environ.Env()
 environ.Env.read_env()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(env('DB_ENGINE'))
 SECRET_KEY = env('SECRET_KEY')
 
@@ -116,8 +115,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/auth/login/'
 
