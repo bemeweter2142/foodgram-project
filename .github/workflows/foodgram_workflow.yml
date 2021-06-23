@@ -39,7 +39,7 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
-        source: "./docker-compose.yaml, ./.env.template, ./foodgram/static/, ./nginx/"
+        source: "./docker-compose.yaml, ./.env.temp, ./foodgram/static/, ./nginx/"
         target: "~/foodgram-project/"
         rm: false
         overwrite: true
