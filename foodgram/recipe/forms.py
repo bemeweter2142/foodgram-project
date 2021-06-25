@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 
-from .models import Ingredient, Recipe, RecipeIngredient,
+from .models import Ingredient, Recipe, RecipeIngredient
 
 
 class RecipeForm(forms.ModelForm):
