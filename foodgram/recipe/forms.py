@@ -12,9 +12,10 @@ class RecipeForm(forms.ModelForm):
         label='Ингредиенты'
     )
     cooking_time = forms.IntegerField(
-        validators=[MinValueValidator(1)],
+        label='Время приготовления',
+        min_value=1,
+        validators=[MinValueValidator(1)]
     )
-
     class Meta:
         model = Recipe
         fields = [
