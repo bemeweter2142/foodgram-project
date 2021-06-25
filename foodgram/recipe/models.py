@@ -111,6 +111,7 @@ class Recipe(models.Model):
     )
     cooking_time = models.PositiveIntegerField(
         verbose_name='Время приготовления',
+        default=15,
         validators=[MinValueValidator(1)],
     )
     slug = models.SlugField(
