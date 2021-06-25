@@ -1,4 +1,4 @@
-# Встроенная модель для работы с пользователям
+from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -123,9 +123,8 @@ class Recipe(models.Model):
     )
     pub_date = models.DateTimeField(
         'Дата публикации',
-        auto_now_add=True,
+        default=datetime.now
         blank=True,
-        null=True,
     )
     class Meta:
         ordering = ['pub_date']
