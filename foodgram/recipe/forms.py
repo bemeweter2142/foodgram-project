@@ -1,9 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import inlineformset_factory, modelformset_factory, widgets
-from django.http import request
+from django.core.validators import MinValueValidator
 
-from .models import Ingredient, Recipe, RecipeIngredient, Tag
+from .models import Ingredient, Recipe, RecipeIngredient,
 
 
 class RecipeForm(forms.ModelForm):
@@ -11,6 +10,9 @@ class RecipeForm(forms.ModelForm):
     ingredients = forms.CharField(
         required=False,
         label='Ингредиенты'
+    )
+    cooking_time = forms.IntegerField(
+        validators=[MinValueValidator(1)],
     )
 
     class Meta:
