@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -123,11 +122,11 @@ class Recipe(models.Model):
     )
     pub_date = models.DateTimeField(
         'Дата публикации',
-        default=datetime.now
+        auto_now_add=True,
         blank=True,
     )
     class Meta:
-        ordering = ['pub_date']
+        #ordering = ['pub_date']
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
 
